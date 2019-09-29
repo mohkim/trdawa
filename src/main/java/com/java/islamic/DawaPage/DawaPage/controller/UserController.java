@@ -149,7 +149,7 @@ public class UserController {
 
         userService.newUser(user);
 
-        return "user/success";
+        return "user/user_success";
 
     }
 
