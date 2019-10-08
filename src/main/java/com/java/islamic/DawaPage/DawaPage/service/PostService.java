@@ -6,8 +6,6 @@
 package com.java.islamic.DawaPage.DawaPage.service;
 
 import com.java.islamic.DawaPage.DawaPage.entity.Post;
-import com.java.islamic.DawaPage.DawaPage.entity.Sub_topic;
-import com.java.islamic.DawaPage.DawaPage.repository.CommentRepository;
 import com.java.islamic.DawaPage.DawaPage.repository.PostRepository;
 import java.util.List;
 import java.util.Optional;
@@ -33,9 +31,11 @@ public class PostService {
 
     public Post findPost(Long id) {
 
-        Optional post = postRepository.findById(id);
+        Optional<Post> post = postRepository.findById(id);
+      
         if (post.isPresent()) {
-            Post post_obj = (Post) post.get();
+                
+            Post post_obj =  post.get();
             if (post_obj.getVisitorsNumber() == null) {
                 post_obj.setVisitorsNumber(0L);
             }
@@ -48,6 +48,7 @@ public class PostService {
             return null;
         }
     }
+    private static final Logger LOG = Logger.getLogger(PostService.class.getName());
 
     public List<Post> findbySubTopic(Long id) {
         return postRepository.findbySubTopic(subTopicService.getSubTopic(id));

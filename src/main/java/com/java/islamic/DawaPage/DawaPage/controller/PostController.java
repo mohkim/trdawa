@@ -5,7 +5,6 @@
  */
 package com.java.islamic.DawaPage.DawaPage.controller;
 
-import com.java.islamic.DawaPage.DawaPage.entity.Comment;
 import com.java.islamic.DawaPage.DawaPage.entity.Post;
 import com.java.islamic.DawaPage.DawaPage.entity.Sub_topic;
 import com.java.islamic.DawaPage.DawaPage.entity.User;
@@ -21,7 +20,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -54,12 +52,20 @@ public class PostController {
     }
 
     @GetMapping("/postList")
-    public String addPostInSubtopic(Model model, @RequestParam String id) {
-
-        model.addAttribute("postList", postService.findbySubTopic(Long.parseLong(id)));
-        model.addAttribute("subTopic", subTopicService.getSubTopic(Long.parseLong(id)));
-
-        return "post/userpostList";
+    public String addPostInSubtopic(Model model, @RequestParam String id, Principal principal) {
+        
+        String email = principal.getName();
+        User user = userService.findByEmail(email);
+        
+        if (subTopicService.subtopicAccessUser(user, Long.parseLong(id))) {
+            
+            model.addAttribute("postList", postService.findbySubTopic(Long.parseLong(id)));
+            model.addAttribute("subTopic", subTopicService.getSubTopic(Long.parseLong(id)));
+            return "post/userpostList";
+            
+        } else {
+                         return "redirect:/postChoice";
+        }
 
     }
 
@@ -126,18 +132,17 @@ public class PostController {
     private static final Logger LOG = Logger.getLogger(PostController.class.getName());
 
     //-------------------------post admin controllers --------------------------------------
-    
     @GetMapping("/postAdminPage")
     public String getPostAdminPage() {
         return "admin/postAdmin/postAdminPage";
 
     }
-    
-     @GetMapping("/usertopic")
-    public String getUserTopicRelation(Model  model) {
-        
+
+    @GetMapping("/usertopic")
+    public String getUserTopicRelation(Model model) {
+
         model.addAttribute("users", userService.getAllUsers());
-        
+
         return "admin/postAdmin/usertopic";
 
     }

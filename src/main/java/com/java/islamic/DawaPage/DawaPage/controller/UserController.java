@@ -9,21 +9,17 @@ import com.java.islamic.DawaPage.DawaPage.entity.Comment;
 import com.java.islamic.DawaPage.DawaPage.entity.Post;
 import com.java.islamic.DawaPage.DawaPage.entity.Sub_topic;
 import com.java.islamic.DawaPage.DawaPage.entity.User;
-import com.java.islamic.DawaPage.DawaPage.repository.UserRepository;
 import com.java.islamic.DawaPage.DawaPage.service.CommentService;
 import com.java.islamic.DawaPage.DawaPage.service.PostService;
 import com.java.islamic.DawaPage.DawaPage.service.SubTopicService;
 import com.java.islamic.DawaPage.DawaPage.service.UserService;
 import java.security.Principal;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import static org.springframework.boot.Banner.Mode.LOG;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -240,10 +236,7 @@ public class UserController {
         User  user=userService.findByEmail(principal.getName());
        List<Comment>  commentNotReadList=commentService.getCommentNotRedByUser(user);
        
-       for (Comment comment : commentNotReadList) {
-            LOG.info("list of Comment Not Read -- > " + comment.getContent()+" User  = "+comment.getUser().getEmail());
-        }
-       
+     
        
        model.addAttribute("comList", commentNotReadList);
        

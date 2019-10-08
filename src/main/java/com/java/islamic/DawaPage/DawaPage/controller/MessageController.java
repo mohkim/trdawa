@@ -47,7 +47,7 @@ public class MessageController {
         User user = userService.findByEmail(principal.getName());
         message.setUser(user);
         messageService.saveMessage(message);
-        return "user/success";
+        return "user/messagesent";
     }
     //------------------------------------------message inbox for admin  ---------------------------------------------
 

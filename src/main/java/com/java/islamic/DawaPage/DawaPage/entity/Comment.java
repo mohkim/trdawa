@@ -66,6 +66,14 @@ public class Comment {
         return id;
     }
 
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -96,7 +104,9 @@ public class Comment {
 
     @Override
     public String toString() {
-        return "Comment{" + "content=" + content + ", createdDate=" + createdDate + ", user=" + user + ", comment_read=" + comment_read + '}';
+        return "Comment{" + "id=" + id + ", content=" + content + ", post=" + post.getId() + '}';
     }
+
+     
 
 }

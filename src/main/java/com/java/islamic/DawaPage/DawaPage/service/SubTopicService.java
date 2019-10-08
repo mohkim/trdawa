@@ -7,10 +7,13 @@ package com.java.islamic.DawaPage.DawaPage.service;
 
 import com.java.islamic.DawaPage.DawaPage.entity.Sub_topic;
 import com.java.islamic.DawaPage.DawaPage.entity.Topic;
+import com.java.islamic.DawaPage.DawaPage.entity.User;
 import com.java.islamic.DawaPage.DawaPage.repository.CommentRepository;
 import com.java.islamic.DawaPage.DawaPage.repository.SubTopicRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -23,6 +26,8 @@ public class SubTopicService {
 
     @Autowired
     public SubTopicRepository subtopicRepository;
+    @Autowired
+    public UserService userService;
 
     public List<Sub_topic> getByTopicFK(Long id) {
         return subtopicRepository.findByfkTopic(id);
@@ -56,5 +61,22 @@ public class SubTopicService {
             return true;
         }
     }
+
+    /**
+     * method to find if  user has right to work in this subtpic 
+     * @param  user   object of User
+     * @param  subId   id of  SubTopic
+    */
+    public boolean subtopicAccessUser(User user, Long subId) {
+
+        User u = userService.getUser(user.getUser_id());
+        List<Sub_topic> sb = u.getSub_topicList();
+           for (Sub_topic sub_topic : sb) {
+            if(sub_topic.getId()==subId)  return  true;
+        }
+        return false;
+    }
+    
+    private static final Logger LOG = Logger.getLogger(SubTopicService.class.getName());
 
 }

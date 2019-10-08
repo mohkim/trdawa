@@ -5,6 +5,7 @@ import java.sql.Clob;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -42,7 +43,7 @@ public class Post {
 
     @Lob
     private String post_content;
-    @OneToMany
+    @OneToMany ( mappedBy = "post")
     private List<Comment> comment_list = new ArrayList<Comment>();
 
     @UpdateTimestamp
@@ -137,7 +138,9 @@ public class Post {
 
     @Override
     public String toString() {
-        return "Post{" + "id=" + id + ", user=" + user + ", sub_topic=" + sub_topic + ", lastUpdatedDate=" + lastUpdatedDate + ", createdDate=" + createdDate + ", visitorsNumber=" + visitorsNumber + '}';
+        return "Post{" + "id=" + id + ", postTopic=" + postTopic + ", comment_list=" + comment_list.size() + '}';
     }
+
+    
 
 }
