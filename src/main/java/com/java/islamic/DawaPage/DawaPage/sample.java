@@ -21,7 +21,7 @@ public class sample {
          System.out.println(encoder.encode(password));
          
          if(encoder.matches("kim12", "$2a$10$WBBX3QvZFYaa7pOyGn4WlOuAWjPt8ny19nt/FMi0J0AR3OC70//Q2"))
-             System.out.println("Bingo");
+             System.out.println("Bingo 2");
          
          else   System.out.println("testas");
       
