@@ -17,26 +17,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class DawaPageApplicationTests {
-
-    @Autowired
-    UserService userService;
-    @Autowired
-    CommentService commentService;
-    @Autowired
-    SubTopicService  subTopicService;
-
-    @Test
-    public void contextLoads() {
-
-    }
-
-    @Test
-    public void commentNotReadbyUser() {
-        User user = userService.getUser(3L);
-
-        LOG.log(Level.INFO,"retur of test  -->  "+subTopicService.subtopicAccessUser(user, 1L));
-        
-    }
-    private static final Logger LOG = Logger.getLogger(DawaPageApplicationTests.class.getName());
+ @Test
+	public void contextLoads() {
+	}
 
 }
