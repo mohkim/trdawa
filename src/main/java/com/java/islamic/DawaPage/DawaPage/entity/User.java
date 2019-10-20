@@ -77,7 +77,7 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Sub_topic> sub_topicList = new ArrayList<Sub_topic>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
     
       @UpdateTimestamp

@@ -67,7 +67,7 @@ public class UserService {
     public boolean isEmailPresent(String email) {
         List<User> list = userRepository.findByEmail(email);
 
-        if (list.size() != 0) {
+        if (!list.isEmpty()) {
             return true;
         } else {
             return false;
@@ -83,12 +83,32 @@ public class UserService {
 
     public int userDiabled(String email) {
         List<User> list = userRepository.findByEmail(email);
-        if (list.size() == 0) {   //  user  do not  exist
+        if (list.isEmpty()) {   //  user  do not  exist
             return 0;
         } else {
-            if (list.get(0).isUserActive())   return  1;   // user  exit and active  
-            else  return   2;             // user  exist  and not  active
-
+            if (list.get(0).isUserActive()) {
+                return 1;   // user  exit and active  
+            } else {
+                return 2;             // user  exist  and not  active
+            }
         }
-      }
     }
+/**
+ * returns all Users with Admin Role
+ * @return  
+ */
+    public List<User> findUser_Admin() {
+        Role adm = roleService.getAdminRole();
+        return userRepository.findAdminUser(adm.getName());
+
+    }
+/**
+ * returns all Users with User Role
+ * @return  
+ */
+    public List<User> findUser_User() {
+        Role usr = roleService.getUserRole();
+        return userRepository.findAdminUser(usr.getName());
+
+    }
+}
