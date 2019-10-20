@@ -46,11 +46,7 @@ public class DawaPageApplication implements CommandLineRunner {
            amd.setTown("Asmara");
            amd.setPhone_Number("+211920349703");
            amd.setUserActive(true);
-          
-          
-           
-          
-          userService.newAdmin(amd);
+              userService.newAdmin(amd);
 }
 
 }
