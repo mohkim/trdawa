@@ -5,7 +5,6 @@
  */
 package com.java.islamic.DawaPage.DawaPage.entity;
 
-import java.lang.annotation.Repeatable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,15 +16,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import jdk.nashorn.internal.runtime.arrays.ArrayLikeIterator;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.Length;
@@ -72,18 +67,23 @@ public class User {
     @Length(max = 1000)
     private String extranote;
     
+    
+    
    
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER  )
     private List<Sub_topic> sub_topicList = new ArrayList<Sub_topic>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER )
     private Set<Role> roles = new HashSet<>();
     
       @UpdateTimestamp
     public LocalDateTime lastUpdatedDate;
      @CreationTimestamp            
     public LocalDateTime  createdDate;
+     
+    
+     private  Long  createdBy;
 
     public User() {
     }
@@ -236,6 +236,16 @@ public class User {
         this.user_id = user_id;
     }
 
+    public Long getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Long createdBy) {
+        this.createdBy = createdBy;
+    }
+
+     
+    
     @Override
     public String toString() {
         return "User{" + "user_id=" + user_id + ", email=" + email + ", password=" + password + ", password2=" + password2 + ", first_name=" + first_name + ", second_name=" + second_name + ", last_name=" + last_name + ", gender=" + gender + ", country=" + country + ", town=" + town + ", phone_Number=" + phone_Number + ", userActive=" + userActive + ", extranote=" + extranote + ", sub_topicList=" + sub_topicList + ", roles=" + roles + ", lastUpdatedDate=" + lastUpdatedDate + ", createdDate=" + createdDate + '}';

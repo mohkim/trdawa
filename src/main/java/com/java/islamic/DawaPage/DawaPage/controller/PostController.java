@@ -45,9 +45,14 @@ public class PostController {
         User user = userService.findByEmail(email);
 
         List<Sub_topic> pageContent = user.getSub_topicList();
-        model.addAttribute("subTopicList", pageContent);
-
-        return "post/usertopicChoice";
+        
+        if(!pageContent.isEmpty()){
+              model.addAttribute("subTopicList", pageContent);
+              return "post/usertopicChoice";
+        } else {
+              return "post/notopicgiven";
+        }
+      
 
     }
 

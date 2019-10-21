@@ -45,12 +45,12 @@ public class UserController {
     @Autowired
     public PostService postService;
     @Autowired
-    public CommentService  commentService;
+    public CommentService commentService;
 
     @GetMapping("/user")
     public String getUserPage(Model model) {
 
-        List<User> pageContent = userService.getAllUsers();
+        List<User> pageContent = userService.findUser_User();
         model.addAttribute("data", pageContent);
 
         return "user/user";
@@ -134,7 +134,7 @@ public class UserController {
     }
 
     @PostMapping("/registerformSave")
-    public String saveRegistrationForm(@Valid User user, Model model, BindingResult bindingResult) {
+    public String saveRegistrationForm(@Valid User user, Model model, BindingResult bindingResult, Principal principal) {
 
         if (bindingResult.hasErrors()) {
             return "user/registerform";
@@ -142,7 +142,8 @@ public class UserController {
             model.addAttribute("exist", true);
             return "user/registerform";
         }
-
+        User u = userService.findByEmail(principal.getName());
+        user.setCreatedBy(u.getUser_id());  // 
         userService.newUser(user);
 
         return "user/user_success";
@@ -228,24 +229,21 @@ public class UserController {
         postService.savePost(post);
         return "user/success";
     }
-    
-    // ----------------------------------user  activity  part -----------------------------------------------------------
- @GetMapping("/activity")
-    public String getUserActivityPage(Model model  ,Principal  principal) {
 
-        User  user=userService.findByEmail(principal.getName());
-       List<Comment>  commentNotReadList=commentService.getCommentNotRedByUser(user);
-       
-     
-       
-       model.addAttribute("comList", commentNotReadList);
-       
+    // ----------------------------------user  activity  part -----------------------------------------------------------
+    @GetMapping("/activity")
+    public String getUserActivityPage(Model model, Principal principal) {
+
+        User user = userService.findByEmail(principal.getName());
+        List<Comment> commentNotReadList = commentService.getCommentNotRedByUser(user);
+
+        model.addAttribute("comList", commentNotReadList);
 
         return "user/activity/activity";
 
     }
     private static final java.util.logging.Logger LOG = java.util.logging.Logger.getLogger(UserController.class.getName());
-    
+
 }
 
 class UserTopicEdit {
@@ -268,7 +266,5 @@ class UserTopicEdit {
     public void setSubTopicid(Long subTopicid) {
         this.subTopicid = subTopicid;
     }
-   
-    
 
 }
