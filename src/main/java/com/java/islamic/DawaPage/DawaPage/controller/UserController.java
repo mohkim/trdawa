@@ -144,6 +144,7 @@ public class UserController {
         }
         User u = userService.findByEmail(principal.getName());
         user.setCreatedBy(u.getUser_id());  // 
+        //user.dbBithDate();          
         userService.newUser(user);
 
         return "user/user_success";

@@ -36,8 +36,8 @@ public class DawaPageApplication implements CommandLineRunner {
 
     private void creteAdmin() {
         User amd = new User();
-        amd.setEmail("kem.moh91@gmail.com");
-        amd.setPassword("19hom.mek");
+        amd.setEmail("kk@kk.com");
+        amd.setPassword("kk");
          amd.setFirst_name("Kemal");
           amd.setSecond_name("Mohammed");
           amd.setLast_name("AHMED");

@@ -5,25 +5,26 @@
  */
 package com.java.islamic.DawaPage.DawaPage.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -44,7 +45,11 @@ public class User {
     private String password;
     @Transient
     private String password2;
+
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    public LocalDate birthDate;
  
+
     @NotEmpty
     private String first_name;
     @NotEmpty
@@ -66,24 +71,19 @@ public class User {
 
     @Length(max = 1000)
     private String extranote;
-    
-    
-    
-   
 
-    @ManyToMany(fetch = FetchType.EAGER  )
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Sub_topic> sub_topicList = new ArrayList<Sub_topic>();
 
-    @ManyToMany(fetch = FetchType.EAGER )
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
-    
-      @UpdateTimestamp
+
+    @UpdateTimestamp
     public LocalDateTime lastUpdatedDate;
-     @CreationTimestamp            
-    public LocalDateTime  createdDate;
-     
-    
-     private  Long  createdBy;
+    @CreationTimestamp
+    public LocalDateTime createdDate;
+
+    private Long createdBy;
 
     public User() {
     }
@@ -107,8 +107,6 @@ public class User {
     public void setPassword2(String password2) {
         this.password2 = password2;
     }
-
-   
 
     public Set<Role> getRoles() {
         return roles;
@@ -157,8 +155,6 @@ public class User {
     public void setUserActive(boolean userActive) {
         this.userActive = userActive;
     }
-
-   
 
     public String getLast_name() {
         return last_name;
@@ -244,17 +240,28 @@ public class User {
         this.createdBy = createdBy;
     }
 
-     
-    
+  
+
     @Override
     public String toString() {
         return "User{" + "user_id=" + user_id + ", email=" + email + ", password=" + password + ", password2=" + password2 + ", first_name=" + first_name + ", second_name=" + second_name + ", last_name=" + last_name + ", gender=" + gender + ", country=" + country + ", town=" + town + ", phone_Number=" + phone_Number + ", userActive=" + userActive + ", extranote=" + extranote + ", sub_topicList=" + sub_topicList + ", roles=" + roles + ", lastUpdatedDate=" + lastUpdatedDate + ", createdDate=" + createdDate + '}';
     }
 
-     
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
 
     public String getFullName() {
-        return  first_name + " " + second_name;
+        return first_name + " " + second_name;
     }
+
+    /**
+     * this method converts string Date to LocalDate
+     */
+  
 
 }
